@@ -10,7 +10,11 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup ';
 import DeleteCardPopup from './DeleteCardPopup';
 import ProtectedRoute from './ProtectedRoute';
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import Login from './Login';
+import Register from './Register';
+import auth from '../utils/Auth';
+import InfoTooltip from './InfoTooltip';
+import { BrowserRouter, Route, Switch, Redirect, useHistory } from 'react-router-dom';
 
 function App() {
 
@@ -18,8 +22,14 @@ function App() {
   const [isEditProfilePopupOpen, onEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, onAddPlacePopupOpen] = React.useState(false);
   const [isDeleteCardPopup, onDeleteCardPopup] = React.useState(false);
+  const [isInfoTooltipPopup, onInfoTooltipPopup] = React.useState(false);
+  const [isLuckInfoTooltip, setLuckInfoTooltip] = React.useState(null);
+  const [islogOn, setlogOn] = React.useState(null);
+  const history = useHistory();
   const [selectedCard, setSelectedCard] = React.useState({link: '', name: ''});
   const [currentUser, setCurrentUser] = React.useState({});
+  const [userEmail, setUserEmail] = React.useState("");
+  const [userPassword, setUserPassword] = React.useState("");
   const [cards, setCards] = React.useState([]);
   const [cardDelete, setCardDelete] = React.useState({});
   const [profilePopupButtonText, setProfilePopupButtonText] = React.useState('Сохранить');
@@ -53,14 +63,26 @@ function App() {
     onEditProfilePopupOpen(false);
     onAddPlacePopupOpen(false);
     onDeleteCardPopup(false);
+    onInfoTooltipPopup(false);
     setSelectedCard({link: '', name: ''});
     setCardDelete({link: '',  name: ''});
+  }
+
+  function closeInfoTooltipPopup() {
+    closeAllPopups();
+    if (isLuckInfoTooltip) {
+      handleIsLogin({email: userEmail, password: userPassword});
+    }
   }
 
   React.useEffect(() => {
     function handleOverlayClick(evt) {
       if (evt.target.classList.contains('popup')) {
-        closeAllPopups();
+        if (isLuckInfoTooltip) {
+          closeInfoTooltipPopup();
+        } else {
+          closeAllPopups();
+        }
       }
     }
     document.addEventListener('mousedown', handleOverlayClick);
@@ -74,7 +96,11 @@ function App() {
   React.useEffect(() => {
     function handleEscapeClick(evt) {
       if (evt.key ==='Escape') {
-        closeAllPopups();
+        if (isLuckInfoTooltip) {
+          closeInfoTooltipPopup();
+        } else {
+          closeAllPopups();
+        }
       }
     }
     document.addEventListener('keyup', handleEscapeClick);
@@ -84,6 +110,66 @@ function App() {
     }
 
   },[]);
+
+
+  React.useEffect(() => {
+    handleISToken();
+    setLuckInfoTooltip(false);
+  }, [])
+
+  function handleIsToken() {
+
+    const jwt = localStorage.getItem("jwt");
+    if (jwt) {
+      auth.checkToken(jwt)
+        .then((res) => {
+          setUserEmail(res.data.email);
+          setlogOn(true);
+          history.push("/");
+        })
+        .catch(() => {
+          setLuckInfoTooltip(false);
+          onInfoTooltipPopup(true);
+        })
+    } else {
+      return;
+    }
+  }
+
+  function handleIsRegister(data) {
+    auth.register(data)
+      .then((res) => {
+        setUserEmail(res.data.email);
+        setUserPassword(data.password);
+        setLuckInfoTooltip(true);
+        onInfoTooltipPopup(true);
+      })
+      .catch(() => {
+        setLuckInfoTooltip(false);
+        onInfoTooltipPopup(true);
+      })
+  }
+
+  function handleIsLogin(data) {
+    auth.login(data)
+      then((res) => {
+        localStorage.setItem("jwt", res.token);
+        handleIsToken();
+      })
+      .catch(() => {
+        setLuckInfoTooltip(false);
+        onInfoTooltipPopup(true);
+      })
+  }
+
+  function handleSignOut() {
+    setlogOn(false);
+    history.push("/sign-in");
+    localStorage.removeItem("jwt");
+    setUserEmail("");
+    setUserPassword("");
+    setLuckInfoTooltip(null);
+  }
   
   React.useEffect(() => {
     Promise.all([api.getUser(), api.getInitialCards()])
@@ -176,7 +262,8 @@ function App() {
     <div className="page">
      
      <CurrentUserContext.Provider value={currentUser}>
-        <Header/>
+        <Header
+        />
         <Switch>
           <Main
             onEditAvatar={handleEditAvatarClick}

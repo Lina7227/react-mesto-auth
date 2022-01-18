@@ -4,8 +4,8 @@
     margin: 45px auto 40px;
     padding: 0 0 41px;
     display: flex;
-    justify-content: flex-start;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: baseline;
     border-bottom-width: 1px;
     border-bottom-style: solid;
     border-bottom-color: rgba(84, 84, 84, .7);

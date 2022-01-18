@@ -1,22 +1,46 @@
 import React from 'react';
+import { Link, useLocation } from "react-router-dom";
 
-function PageWithLogin() {
+function PageWithLogin(props) {
+
+    const location = useLocation();
+    const isLocationSignUp = location.pathname === "/sign-up";
+    const [ values, setValues ] = useState({});
+    
+    function handleChange(evt) {
+        const {name, value} = evt.target;
+        setValues({...values, [name]: value });
+    }
+
+    function handleSubmit(evt) {
+        evt.preventDefault();
+        onSubmit({email: values.email, password: values.password})
+      }
 
     return (
 
         <div className="auth">
-            <p className="auth__welcome">
-                Регистрация
-            </p>
-            <form onSubmit={handleSubmit} className="auth__form">Email
+            <h2 className="auth__welcome">
+                {props.title}
+            </h2>
+            <form 
+                onSubmit={handleSubmit}
+                name={`${props.name}`} 
+                className="auth__form"
+                noValidate
+
+            >Email
                 <label htmlFor="email" className="auth__label">
                     <input 
                     id="email" 
                     name="email" 
-                    type="email" 
+                    type="email"
+                    value={props.values.email || ""}
                     className="auth__input"  
-                    placeholder="Email" 
-                    
+                    placeholder="Email"
+                    required
+                    minLength="2"
+                    maxLength="30"
                     onChange={handleChange} 
                     />
                 </label>
@@ -28,7 +52,10 @@ function PageWithLogin() {
                     type="password" 
                     className="auth__input"
                     placeholder="Пароль"
-                    value={password || ""} 
+                    value={password || ""}
+                    required
+                    minLength="6"
+                    maxLength="20"
                     onChange={handleChange} 
                     />
                 </label>
@@ -36,15 +63,19 @@ function PageWithLogin() {
                     type="submit" 
                     onSubmit={handleSubmit} 
                     className="auth__button">
-                    Зарегистрироваться
+                    {props.buttonText}
                 </button>
             </form>
 
-            <div className="auth__signin">
-                <p className="auth__text">Уже зарегистрированы? </p>
-                <Link to="login" className="auth__login-link">Войти</Link>
-            </div>
+            {isLocationSignUp && (
+                <div className="auth__signin">
+                    <p className="auth__text">Уже зарегистрированы? </p>
+                    <Link to={"/sign-in"} className="auth__login-link">Войти</Link>
+                </div>
+            )}
         </div>
 
     );
 }
+
+export default PageWithLogin;

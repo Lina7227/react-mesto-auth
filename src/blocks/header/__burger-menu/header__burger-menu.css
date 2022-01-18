@@ -1,0 +1,19 @@
+.header__burger-menu {
+    height: 24px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    padding: 0;
+    transform: rotate(90deg);
+    display: none;
+}
+
+.burger-menu:hover {
+    opacity: 0.6;
+  }
+  
+  @media (max-width: 500px) {
+    .burger-menu {
+      display: flex;
+    }
+  }
