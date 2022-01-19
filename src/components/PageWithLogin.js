@@ -5,7 +5,7 @@ function PageWithLogin(props) {
 
     const location = useLocation();
     const isLocationSignUp = location.pathname === "/sign-up";
-    const [ values, setValues ] = useState({});
+    const [ values, setValues ] = React.useState({});
     
     function handleChange(evt) {
         const {name, value} = evt.target;
@@ -14,7 +14,7 @@ function PageWithLogin(props) {
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        onSubmit({email: values.email, password: values.password})
+        props.onSubmit({email: values.email, password: values.password})
       }
 
     return (
@@ -35,7 +35,7 @@ function PageWithLogin(props) {
                     id="email" 
                     name="email" 
                     type="email"
-                    value={props.values.email || ""}
+                    value={values.email || ""}
                     className="auth__input"  
                     placeholder="Email"
                     required
@@ -52,7 +52,7 @@ function PageWithLogin(props) {
                     type="password" 
                     className="auth__input"
                     placeholder="Пароль"
-                    value={password || ""}
+                    value={values.password || ""}
                     required
                     minLength="6"
                     maxLength="20"

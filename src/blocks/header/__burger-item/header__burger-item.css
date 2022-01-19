@@ -1,0 +1,10 @@
+.header__burger-item {
+    margin: 0 6px 0 0;
+    width: 3px;
+    border: 1.5px solid #fff;
+    box-sizing: border-box;
+}
+
+.header__burger-item:last-of-type {
+    margin: 0;
+}

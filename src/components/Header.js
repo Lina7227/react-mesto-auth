@@ -1,29 +1,52 @@
 import logo from '../images/logo.svg';
+import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
-function Header() {
+function Header(props) {
+
+    const location = useLocation();
+    const islocationSignIn = location.pathname === '/sign-in';
+    const islocationBasic = location.pathname === '/';
+    const [isMenu, setMenu] = React.useState(false);
+
+    function handleSignOut() {
+        props.onSugnOut();
+        setMenu(false);
+    }
+
+    function handleSignIn() {
+
+    }
+
+    function handleMenu () {
+        setMenu(true);
+    }
+
+    function handleMenuClose() {
+        setMenu(false);
+    }
 
     return (
         <header className={`header ${!isMenu ? "header__block" : ""} ${isMenu ? "header__column" : "" }`}>
 
             <div className={`header__container ${isMenu ? "header__container_column" : "" } `}>
                 <img src={logo} alt="Логотип" className="header__logo"/>
-                <button type="button" aria-label="Закрыть меню" onClick={handleCloseMenu} className={`popup__close popup__close_form popup__close_menu ${isMenu ? "popup__close_active" : "" }`}></button>
+                <button type="button" aria-label="Закрыть меню" onClick={handleMenuClose} className={`popup__close popup__close_form popup__close_menu ${isMenu ? "popup__close_active" : "" }`}></button>
             </div>
 
-            <div className= {`header__burger-menu ${(!isLoggedIn || isMenu) ? "header__burger-menu_inactive" : ""}`} onClick={handleMenuClick}>
-                <div className="header__burger-line"></div>
-                <div className="header__burger-line"></div>
-                <div className="header__burger-line"></div>
+            <div className= {`header__burger-menu ${(!props.islogOn || isMenu) ? "header__burger-menu_inactive" : ""}`} onClick={handleMenu}>
+                <div className="header__burger-item"></div>
+                <div className="header__burger-item"></div>
+                <div className="header__burger-item"></div>
             </div>
 
-            { (isLocationMain) &&
-                <nav className={`header__nav-menu ${isLoggedIn && !isColumnMenu ? "header__nav-menu_inactive" : ""} ${isMenu ? "header__nav-menu_column" : ""} `}>
-                    <p className="header__email">{isLoggedIn ? userEmail : ""}</p>
-                    {!isLocationSignIn ?
-                    <NavLink onClick={!isLoggedIn ? handleSignIn : handleSignOut} className={`header__nav-item ${isLocationMain ? "header__nav-item_active" : ""}`} to={"/sign-in"}>{isLoggedIn ? "Выйти" : "Войти"}</NavLink>
+            { (islocationBasic) &&
+                <nav className={`header__nav-menu ${props.islogOn && !isMenu ? "header__nav-menu_inactive" : ""} ${isMenu ? "header__nav-menu_column" : ""} `}>
+                    <p className="header__email">{props.islogOn ? props.userEmail : ""}</p>
+                    {!islocationSignIn ?
+                    <NavLink onClick={!props.islogOn ? handleSignIn : handleSignOut} className={`header__nav-item ${islocationBasic ? "header__nav-item_active" : ""}`} to={"/sign-in"}>{props.islogOn ? "Выйти" : "Войти"}</NavLink>
                     :
-                    <NavLink className="header__nav-item" activeClassName="header_nav-item_active" to={"/sign-up"}>{!isLoggedIn ? "Регистрация" : ""}</NavLink>
+                    <NavLink className="header__nav-item" activeClassName="header_nav-item_active" to={"/sign-up"}>{!props.islogOn ? "Регистрация" : ""}</NavLink>
                     }
                 </nav>
             }

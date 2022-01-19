@@ -1,8 +1,7 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
 import PageWithLogin from './PageWithLogin';
 
-function Login() {
+function Login(props) {
 
     return (
 
@@ -10,7 +9,7 @@ function Login() {
             title="Вход"
             name="login"
             buttonText="Войти"
-            onSubmit={onSubmitLogin}
+            onSubmit={props.onSubmitLogin}
         />
     )
 }

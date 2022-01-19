@@ -1,7 +1,7 @@
 import React from 'react';
 import PageWithLogin from './PageWithLogin';
 
-function Register() {
+function Register(props) {
     
 
     return (
@@ -10,7 +10,7 @@ function Register() {
             title="Регистрация"
             name="register"
             buttonText="Зарегистрироваться"
-            onSubmit={onSubmitRegister}
+            onSubmit={props.onSubmitRegister}
         />
     )
 }

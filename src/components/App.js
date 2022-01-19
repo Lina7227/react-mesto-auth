@@ -113,7 +113,7 @@ function App() {
 
 
   React.useEffect(() => {
-    handleISToken();
+    handleIsToken();
     setLuckInfoTooltip(false);
   }, [])
 
@@ -152,7 +152,7 @@ function App() {
 
   function handleIsLogin(data) {
     auth.login(data)
-      then((res) => {
+      .then((res) => {
         localStorage.setItem("jwt", res.token);
         handleIsToken();
       })
@@ -262,10 +262,19 @@ function App() {
     <div className="page">
      
      <CurrentUserContext.Provider value={currentUser}>
+
         <Header
+          islogOn={islogOn}
+          userEmail={userEmail}
+          onSignOut={handleSignOut}
         />
+
         <Switch>
-          <Main
+
+          <ProtectedRoute
+            exact
+            path="/"
+            component={Main}
             onEditAvatar={handleEditAvatarClick}
             onEditProfile={handleEditProfileClick}
             onAddPlace={handleAddPlaceClick}
@@ -274,13 +283,25 @@ function App() {
             onCardDelete={handleCardDeleteClick}
             cards={cards}
           />
+
           <Route path="/sign-up">
-            
+            <Register
+              onSubmitRegister={handleIsRegister}
+            />
           </Route>
+
           <Route path="/sign-in">
-            
+            <Login
+              onSubmitLogin={handleIsLogin}
+            />
           </Route>
+
+          <Route>
+            <Redirect to={!islogOn ? "/sign-in" : "/"} />
+          </Route>
+
         </Switch>
+
         <Footer/>
 
         <EditProfilePopup 
@@ -316,6 +337,13 @@ function App() {
           card={selectedCard}
           onClose={closeAllPopups}
         />
+
+        <InfoTooltip
+          isOpen={isInfoTooltipPopup}
+          onClose={closeInfoTooltipPopup}
+          isLuck={isLuckInfoTooltip}
+        />
+
       </CurrentUserContext.Provider>
 
     </div>
