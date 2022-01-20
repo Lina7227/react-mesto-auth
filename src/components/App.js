@@ -25,6 +25,7 @@ function App() {
   const [isInfoTooltipPopup, onInfoTooltipPopup] = React.useState(false);
   const [isLuckInfoTooltip, setLuckInfoTooltip] = React.useState(null);
   const [islogOn, setlogOn] = React.useState(null);
+  const [isLoading, setIsLoading] = React.useState(true);
   const history = useHistory();
   const [selectedCard, setSelectedCard] = React.useState({link: '', name: ''});
   const [currentUser, setCurrentUser] = React.useState({});
@@ -91,7 +92,13 @@ function App() {
       document.removeEventListener('mousedown', handleOverlayClick);
     }
 
-  },[]);
+  },[
+    isLuckInfoTooltip,
+    isEditAvatarPopupOpen,
+    isEditProfilePopupOpen,
+    isAddPlacePopupOpen,
+    selectedCard
+  ]);
 
   React.useEffect(() => {
     function handleEscapeClick(evt) {
@@ -109,7 +116,13 @@ function App() {
       document.removeEventListener('keyup', handleEscapeClick);
     }
 
-  },[]);
+  },[
+    isLuckInfoTooltip,
+    isEditAvatarPopupOpen,
+    isEditProfilePopupOpen,
+    isAddPlacePopupOpen,
+    selectedCard
+  ]);
 
 
   React.useEffect(() => {
@@ -119,12 +132,14 @@ function App() {
 
   function handleIsToken() {
 
+    setIsLoading(true);
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
       auth.checkToken(jwt)
         .then((res) => {
           setUserEmail(res.data.email);
           setlogOn(true);
+          setIsLoading(false);
           history.push("/");
         })
         .catch(() => {
@@ -132,6 +147,7 @@ function App() {
           onInfoTooltipPopup(true);
         })
     } else {
+      setIsLoading(false);
       return;
     }
   }
@@ -169,6 +185,7 @@ function App() {
     setUserEmail("");
     setUserPassword("");
     setLuckInfoTooltip(null);
+    setIsLoading(false);
   }
   
   React.useEffect(() => {
@@ -267,6 +284,7 @@ function App() {
           islogOn={islogOn}
           userEmail={userEmail}
           onSignOut={handleSignOut}
+          isLoading={isLoading}
         />
 
         <Switch>
@@ -282,6 +300,7 @@ function App() {
             onCardLike={handleCardLike}
             onCardDelete={handleCardDeleteClick}
             cards={cards}
+            islogOn={islogOn}
           />
 
           <Route path="/sign-up">
@@ -293,6 +312,7 @@ function App() {
           <Route path="/sign-in">
             <Login
               onSubmitLogin={handleIsLogin}
+              isLoading={isLoading}
             />
           </Route>
 
@@ -305,7 +325,7 @@ function App() {
         <Footer/>
 
         <EditProfilePopup 
-          isOpen={isEditProfilePopupOpen} 
+          isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           buttonSubmitText={profilePopupButtonText}

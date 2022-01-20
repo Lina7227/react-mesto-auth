@@ -1,19 +1,21 @@
 .header__burger-menu {
-    height: 24px;
-    background-color: transparent;
-    cursor: pointer;
-    transition: opacity 0.3s;
-    padding: 0;
-    transform: rotate(90deg);
     display: none;
 }
 
-.burger-menu:hover {
-    opacity: 0.6;
+@media (max-width: 500px) {
+  .header__burger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    padding: 0;
+    margin: 0 30px 0 0;
   }
-  
-  @media (max-width: 500px) {
-    .burger-menu {
-      display: flex;
-    }
-  }
+}
+
+.header__burger-menu:hover {
+  opacity: 0.6;
+}

@@ -5,8 +5,8 @@ import { NavLink, useLocation } from 'react-router-dom';
 function Header(props) {
 
     const location = useLocation();
-    const islocationSignIn = location.pathname === '/sign-in';
-    const islocationBasic = location.pathname === '/';
+    const islocationSignIn = location.pathname === "/sign-in";
+    const islocationBasic = location.pathname === "/";
     const [isMenu, setMenu] = React.useState(false);
 
     function handleSignOut() {
@@ -15,7 +15,7 @@ function Header(props) {
     }
 
     function handleSignIn() {
-
+        
     }
 
     function handleMenu () {
@@ -34,13 +34,13 @@ function Header(props) {
                 <button type="button" aria-label="Закрыть меню" onClick={handleMenuClose} className={`popup__close popup__close_form popup__close_menu ${isMenu ? "popup__close_active" : "" }`}></button>
             </div>
 
-            <div className= {`header__burger-menu ${(!props.islogOn || isMenu) ? "header__burger-menu_inactive" : ""}`} onClick={handleMenu}>
+            <div className={`header__burger-menu ${(!props.islogOn || isMenu) ? "header__burger-menu_inactive" : ""}`} onClick={handleMenu}>
                 <div className="header__burger-item"></div>
                 <div className="header__burger-item"></div>
                 <div className="header__burger-item"></div>
             </div>
 
-            { (islocationBasic) &&
+            { (!props.isLoading || islocationBasic) &&
                 <nav className={`header__nav-menu ${props.islogOn && !isMenu ? "header__nav-menu_inactive" : ""} ${isMenu ? "header__nav-menu_column" : ""} `}>
                     <p className="header__email">{props.islogOn ? props.userEmail : ""}</p>
                     {!islocationSignIn ?

@@ -2,12 +2,9 @@
     top: unset;
     right: unset;
     position: unset;
-    border: none;
     outline: none;
     display: none;
     align-self: center;
-    cursor: pointer;
-    transform: rotate(45deg);
     transition: opacity .3s;
     padding: 0;
 }

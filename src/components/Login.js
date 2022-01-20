@@ -5,13 +5,18 @@ function Login(props) {
 
     return (
 
-        <PageWithLogin
-            title="Вход"
-            name="login"
-            buttonText="Войти"
-            onSubmit={props.onSubmitLogin}
-        />
-    )
+        <>
+            {!props.isLoading && 
+                <PageWithLogin
+                    title="Вход"
+                    name="login"
+                    buttonText="Войти"
+                    onSubmit={props.onSubmitLogin}
+                />
+            }
+
+        </>
+    );
 }
 
 export default Login;

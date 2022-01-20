@@ -11,3 +11,9 @@
 .header__nav-item:hover {
     opacity: 0.6;
 }
+
+@media (max-width: 500px) {
+    .header__nav-item {
+        text-align: center;
+    }
+}
