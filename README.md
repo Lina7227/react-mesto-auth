@@ -36,4 +36,4 @@
 
 Проект завершен.
 
-## [Ссылка на сайт проекта](https://lina7227.github.io/mesto-react-auth/)
+## [Ссылка на сайт проекта](https://lina7227.github.io/sign-in)
