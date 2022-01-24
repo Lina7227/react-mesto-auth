@@ -61,7 +61,6 @@ function PageWithLogin(props) {
                 </label>
                 <button 
                     type="submit" 
-                    onSubmit={handleSubmit} 
                     className="auth__button">
                     {props.buttonText}
                 </button>
