@@ -1,0 +1,12 @@
+.form__title_info {
+    margin: 0 0 23px;
+}
+
+@media (max-width: 600px) {
+    .form__title_info {
+        max-width: 244px;
+        font-size: 20px;
+        line-height: 24px;
+        margin: 0 0 25px;
+    }
+}

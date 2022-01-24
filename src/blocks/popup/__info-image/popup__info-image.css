@@ -4,11 +4,11 @@
     height: 120px;
     background-position: center;
     background-repeat: no-repeat;
-    margin: 32px auto 26px;
+    margin: 26px 119px 35px;
 }
 
 @media (max-width: 600px) {
     .popup__info-image {
-        margin: 32px auto 40px;
+        margin: 25px auto 40px;
     }
 }

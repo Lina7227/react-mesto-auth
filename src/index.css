@@ -17,6 +17,7 @@
 @import url('./blocks/header/__email/header__email.css');
 @import url('./blocks/header/__nav-item/header__nav-item.css');
 @import url('./blocks/header/__nav-item/_active/header__nav-item_active.css');
+@import url('./blocks/header/__nav-item/_mob/header__nav-item_mob.css');
 
 @import url('./blocks/profile/profile.css');
 @import url('./blocks/profile/__edit-avatar/profile__edit-avatar.css');
@@ -75,6 +76,7 @@
 @import url('./blocks/form/__button/_add/form__button_add.css');
 @import url('./blocks/form/__button/_add-remove/form__button_add-remove.css');
 @import url('./blocks/form/__button/_invalid/form__button_invalid.css');
+@import url('./blocks/form/__title/_info/form__title_info.css');
 
 @import url('./blocks/error/error.css');
 

@@ -18,3 +18,13 @@
 .auth__button.hover {
     opacity: 0.8;
 }
+
+@media (max-width: 600px) {
+    .auth__button {
+        margin: 173px 0 0;
+        width: 260px;
+        height: 46px;
+        font-size: 16px;
+        line-height: 19px;
+    }
+}

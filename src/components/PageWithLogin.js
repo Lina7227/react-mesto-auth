@@ -15,7 +15,7 @@ function PageWithLogin(props) {
     function handleSubmit(evt) {
         evt.preventDefault();
         props.onSubmit({email: values.email, password: values.password})
-      }
+    }
 
     return (
 

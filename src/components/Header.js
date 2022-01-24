@@ -10,7 +10,7 @@ function Header(props) {
     const [isMenu, setMenu] = React.useState(false);
 
     function handleSignOut() {
-        props.onSugnOut();
+        props.onSignOut();
         setMenu(false);
     }
 
@@ -42,11 +42,11 @@ function Header(props) {
 
             { (!props.isLoading || islocationBasic) &&
                 <nav className={`header__nav-menu ${props.islogOn && !isMenu ? "header__nav-menu_inactive" : ""} ${isMenu ? "header__nav-menu_column" : ""} `}>
-                    <p className="header__email">{props.islogOn ? props.userEmail : ""}</p>
+                    <p className="header__email">{props.islogOn ? props.userEmail : "" }</p>
                     {!islocationSignIn ?
-                    <NavLink onClick={!props.islogOn ? handleSignIn : handleSignOut} className={`header__nav-item ${islocationBasic ? "header__nav-item_active" : ""}`} to={"/sign-in"}>{props.islogOn ? "Выйти" : "Войти"}</NavLink>
+                    <NavLink onClick={!props.islogOn ? handleSignIn : handleSignOut} className={`header__nav-item ${islocationBasic ? "header__nav-item_active" : "header__nav-item_mob"}`} to={"/sign-in"}>{props.islogOn ? "Выйти" : "Войти"}</NavLink>
                     :
-                    <NavLink className="header__nav-item" activeClassName="header_nav-item_active" to={"/sign-up"}>{!props.islogOn ? "Регистрация" : ""}</NavLink>
+                    <NavLink className="header__nav-item header__nav-item_mob" activeClassName="header_nav-item_active" to={"/sign-up"}>{!props.islogOn ? "Регистрация" : ""}</NavLink>
                     }
                 </nav>
             }

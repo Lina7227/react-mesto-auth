@@ -6,3 +6,9 @@
     justify-content: center;
     width: 358px;
 }
+
+@media (max-width: 600px) {
+    .auth__form {
+        width: 260px;
+    }
+}

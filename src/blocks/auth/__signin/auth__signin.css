@@ -6,3 +6,9 @@
     justify-content: center;
     width: 100%;
 }
+
+@media (max-width: 600px) {
+    .auth__signin {
+        margin: 20px 0 0;
+    }
+}
